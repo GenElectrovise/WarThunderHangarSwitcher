@@ -36,4 +36,4 @@ The numbers on the left of each name is the index of the hangar. You will need t
 
 `WarThunderHangarSwitcher_1.0.exe switch INDEX`
 
-Switches to the hangar of the given index, for example `WarThunderHangarSwitcher_1.0.exe switch 1` will switch to the hangar of index 1 (in the above list that would be "another_hangar.blk")
+Switches to the hangar of the given index, for example `WarThunderHangarSwitcher_1.0.exe switch 1` will switch to the hangar of index 1 (in the above list that would be "another_hangar.blk").
