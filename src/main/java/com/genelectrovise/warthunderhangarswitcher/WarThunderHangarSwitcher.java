@@ -3,20 +3,29 @@ package com.genelectrovise.warthunderhangarswitcher;
 import java.io.*;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-public class Main {
+public class WarThunderHangarSwitcher {
 
     private static String warThunderLoc = "";
+    private static List validCommands = Stream.of(new String[]{"switch", "list"}).collect(Collectors.toList());
 
     public static void main(String[] args) throws IOException {
 
-        warThunderLoc = getWarThunderLoc();
+        Thread.currentThread().setUncaughtExceptionHandler(new WTHSExceptionHandler());
 
-        log("Received argument 0: " + args[0]);
+        log("War Thunder Hangar Switcher, by GenElectrovise");
+
+        if (args.length < 1)
+            throw new IllegalStateException("Must have at least 1 argument! Commands: [switch], [list]");
+        if (!validCommands.contains(args[0]))
+            throw new IllegalStateException(args[0] + " is not a valid command. Valid commands are [switch], [list]");
+
+        warThunderLoc = getWarThunderLoc();
 
         if (args[0].equals("switch")) {
             if (args.length < 2)
-                throw new IndexOutOfBoundsException("Switch command requires an index. Example: 'switch 1'. Use 'list' to get hangar indices.");
+                throw new IllegalStateException("Switch command requires an index. Example: [switch 1]. Use [list] to get hangar indices.");
             switchHangar(args[1]);
         }
 
@@ -27,15 +36,15 @@ public class Main {
 
     private static void listHangars() {
 
-        log("Listing hangars");
-        log("");
+        log("Listing hangars:", false);
 
         File hangarsFile = new File(warThunderLoc + "/custom_hangars");
         if (!hangarsFile.exists()) hangarsFile.mkdir();
 
-        List<File> hangars = List.of(hangarsFile.listFiles((name -> name.getAbsolutePath().endsWith(".blk"))));
+        List<File> hangars = Stream.of(hangarsFile.listFiles((name -> name.getAbsolutePath().endsWith(".blk")))).collect(Collectors.toList());
+
         for (File file : hangars)
-            log(hangars.indexOf(file) + " - " + file.getName());
+            log(hangars.indexOf(file) + " - " + file.getName(), false);
 
         log("");
 
@@ -66,8 +75,18 @@ public class Main {
 
         File hangarsFile = new File(warThunderLoc + "/custom_hangars");
         if (!hangarsFile.exists()) hangarsFile.mkdir();
-        List<File> hangars = List.of(hangarsFile.listFiles((name -> name.getAbsolutePath().endsWith(".blk"))));
-        String newHangar = "custom_hangars/" + hangars.get(Integer.valueOf(arg1)).getName();
+        List<File> hangars = Stream.of(hangarsFile.listFiles((name -> name.getAbsolutePath().endsWith(".blk")))).collect(Collectors.toList());
+
+        int index;
+        try {
+            index = Integer.valueOf(arg1);
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException("[switch] requires an integer argument, for example [switch 3]. Use [list] for hangar indices. The given argument " + arg1 + " is not an integer.");
+        }
+        if (index < 0 || index > hangars.size() - 1)
+            throw new IndexOutOfBoundsException("Provided index " + index + " is out of the bounds 0-" + (hangars.size() - 1) + ". Use [list] to find hangar indices.");
+
+        String newHangar = "custom_hangars/" + hangars.get(index).getName();
 
         replaceLines(configBlk, newHangar);
 
@@ -92,6 +111,12 @@ public class Main {
         for (String line : lines) {
             if (line.startsWith("warThunderLoc=")) ;
             String loc = line.replace("warThunderLoc=", "");
+
+            if (loc.equals(""))
+                throw new NullPointerException("Found config.wths 'warThunderLoc=' but location not specified");
+            if (!new File(loc).exists())
+                throw new FileNotFoundException("Could not find warThunderLoc " + loc + " (does not exist)");
+
             log("Using warThunderLoc: " + loc);
             return loc;
         }
@@ -100,7 +125,15 @@ public class Main {
     }
 
     public static void log(String msg) {
-        System.out.println(msg);
+        log(msg, true);
+    }
+
+    public static void log(String msg, boolean thenReturn) {
+        System.out.println(" > " + msg + (thenReturn ? System.lineSeparator() : ""));
+    }
+
+    public static void err(String msg) {
+        System.err.println(" > " + msg);
     }
 
     // read file one line at a time
