@@ -112,8 +112,16 @@ public class WarThunderHangarSwitcher {
             if (line.startsWith("warThunderLoc=")) ;
             String loc = line.replace("warThunderLoc=", "");
 
-            if (loc.equals(""))
-                throw new NullPointerException("Found config.wths 'warThunderLoc=' but location not specified");
+            if (loc.equals("")) {
+                err("Found config.wths 'warThunderLoc=' but location not specified.");
+                loc = tryFindLocViaSteam();
+
+                if (loc.equals("")) {
+                    throw new NullPointerException("Could not find War Thunder in config.wths or at default location C:/Program Files/Steam/steamapps/common/War Thunder");
+                } else {
+                    err("Using default location C:/Program Files/Steam/steamapps/common/War Thunder because it exists and config.wths does not specify a location.");
+                }
+            }
             if (!new File(loc).exists())
                 throw new FileNotFoundException("Could not find warThunderLoc " + loc + " (does not exist)");
 
@@ -122,6 +130,15 @@ public class WarThunderHangarSwitcher {
         }
 
         throw new NullPointerException("War thunder location not specified in wths_config, use warThunderLoc=LOCATION (e.g. C:/War Thunder)");
+    }
+
+    private static String tryFindLocViaSteam() {
+        File file = new File("C:/Program Files/Steam/steamapps/common/War Thunder");
+        if (file.exists()) {
+            return file.getAbsolutePath();
+        } else {
+            return "";
+        }
     }
 
     public static void log(String msg) {
@@ -133,7 +150,7 @@ public class WarThunderHangarSwitcher {
     }
 
     public static void err(String msg) {
-        System.err.println(" > " + msg);
+        System.err.println(" ! " + msg);
     }
 
     // read file one line at a time
