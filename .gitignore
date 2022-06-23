@@ -3,3 +3,7 @@ DummyWTInstallation/
 .idea/
 out/
 config.wths
+launch4j.log
+*.iml
+*.exe
+jre-1.8.0-311/
