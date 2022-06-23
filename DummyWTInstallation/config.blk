@@ -1,0 +1,134 @@
+graphicsQuality:t="custom"
+clientBitType:t="auto"
+doShowDriversOutdated:b=yes
+renderer3:t="auto"
+rdseed:i=41
+language:t="English"
+use_eac:b=yes
+use_release_candidate:b=no
+releaseChannel:t=""
+lastTimeSetWin64:i=1650716965
+
+video{
+  fonts:t="compact"
+  perfMetrics:i=3
+  vsync:b=no
+  adaptive_vsync:b=no
+  postfx_antialiasing:t="low_taa"
+  compatibilityMode:b=no
+  latencyFlash:b=no
+  mode:t="fullscreen"
+  windowed:b=no
+  dlssQuality:i=2
+  temporalResolutionScale:r=1
+  latency:i=1
+  alpha_to_coverage:b=yes
+  vrStreamerMode:b=no
+  resolution:t="1920 x 1080"
+  vreye:t="left"
+  instancing:t="auto"
+  driver:t="auto"
+  dlssSharpness:i=0
+}
+
+graphics{
+  rendinstDistMul:r=1.8
+  enableSuspensionAnimation:b=yes
+  landquality:i=4
+  lastClipSize:i=8192
+  backgroundScale:r=1
+  clipmapScale:r=1.5
+  cloudsQuality:i=0
+  contactShadowsQuality:i=2
+  texquality:t="high"
+  skyQuality:i=1
+  anisotropy:i=16
+  ssaa:r=1
+  physicsQuality:i=5
+  tireTracksQuality:i=3
+  panoramaResolution:i=3072
+  lenseFlares:b=yes
+  shadowQuality:t="ultrahigh"
+  fxDensityMul:r=0.2
+  displacementQuality:i=3
+  dirtSubDiv:i=2
+  giQuality:t="high"
+  riGpuObjects:b=yes
+  grassRadiusMul:r=1.35
+  advancedShore:b=yes
+  waterQuality:t="ultrahigh"
+  compatibilityShadowQuality:t="low"
+  mirrorQuality:i=10
+  fxTarget:t="high"
+}
+
+render{
+  grass:b=yes
+  softFx:b=yes
+  ssrQuality:i=2
+  shadows:b=yes
+  staticShadowsOnEffects:b=yes
+  haze:b=yes
+  selfReflection:b=yes
+  rendinstGlobalShadows:b=yes
+  ssaoQuality:i=2
+}
+
+directx{
+  enableHdr:b=no
+  maxaa:i=0
+}
+
+gameplay{
+  enableVR:b=no
+}
+
+debug{
+  screenshotAsJpeg:b=yes
+  enableNvHighlights:t="auto"
+  512mboughttobeenoughforanybody:b=no
+  testLocalization:b=yes
+}
+
+oculus{
+  edgeScale:r=0.95
+  magnetometerEnabled:b=no
+  maxSeparation:r=0.0005
+  predictionEnabled:b=no
+  k2:r=0.666
+  k1:r=0.5
+  zeroParallaxDist:r=3
+  fovMul:r=1.2
+}
+
+launcher{
+  startup_with_windows:b=no
+  hide_to_tray_option:b=no
+  bg_update:b=no
+  bg_tray:b=yes
+}
+
+download{
+  peer_exchange:b=yes
+  DHT:b=yes
+  dnl_speed_rate:i=1000
+  upl_speed_rate:i=1000
+  seeding_on:b=yes
+  upl_limit:b=no
+  dnl_limit:b=no
+  UTP2:b=no
+}
+
+yunetwork{
+  webStatusLocalhostOnly:b=yes
+  curCircuit:t="production"
+  enableWebStatus:b=no
+  webStatusPort:i=55444
+}
+
+sound{
+  speakerMode:t="auto"
+  fmod_sound_enable:b=yes
+}
+
+hangarBlk:t="custom_hangars/breslau_custom_hangar_thin_clouds.blk"
